@@ -190,3 +190,7 @@
         }
       }
       ```
+## 처음 프로젝트 받았을 때 실행시키는 법
+1. `npm install` (import한 라이브러리 다운로드)
+2. `npm run -w` 또는 `npm compile`(변경사항 watch 모드)
+3. `F5`
