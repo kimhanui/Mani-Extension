@@ -118,3 +118,75 @@
     - global한 상수 값
   - Any ( `*` )
     - 정해지지 않은 값
+
+## TS의 컴파일 옵션
+  - library 설정하기 ( `tsconfig.json` )
+    - 아래 옵션들 중 `"target", "module"`을 제외하곤 주석처리된 옵션들이다.
+    - ```json
+      { 
+        "compilerOptions":{
+            "target": "es6",/*Basic Options*/
+            "module": "commonjs",/*Basic Options*/
+
+            /* 
+                - 주석 해제하고 아무것도 안 쓰면 아무 라이브러리도 사용하지 않는다.
+                ex: document, console 등 아무것도 못 읽음
+                - 주석처리하면 자동으로 아래 라이브러리들을 포함한다.
+                  - "dom", // document, console 읽음
+                  - "es6",
+                  - "dom.iterable",
+                  - "scripthost"
+            */
+            "lib": [
+            ],
+
+            /*
+                Ts-> Js로 컴파일, syntax를 체크해서 잠재적 에러를 보고함
+            */
+            "allowJs": true,
+            "checkJs": true,
+
+            /*
+                react.js에서 씀
+            */
+            "jsx": "preserve",
+
+            /*
+                '.d.ts'파일(내 프로젝트를 library로 다른 사람들에게 전달하는..)로 만들때 필요
+            */
+            "declaration": true,
+            "declarationMap": true,
+
+            /*
+                복잡한 프로젝트에서 디버깅, 개발할때 필요
+                - Ts파일을 컴파일하면 Js가 되는데 Ts자체로 디버깅하고싶다면 주석해제
+                - 옵션 적용=> 컴파일 시 .js.map 파일(브라우저, 개발툴에서 이해하기위한 다리 역할)이 생성됨
+                - 브라우저 개발에서도 Js뿐 아니라 Ts파일도 같이 생기며 중단점 지정해서 디버깅 가능
+            */
+            "sourcemap": true,
+
+            "outFile": "./", // skip
+
+            /*
+              복잡한 프로젝트 구조화할때 필요
+              - outDir: 컴파일 후 모든 output(ex. Js파일들~)이 저장될 경로
+                - ex) dist(모든 output의 job에 대해 가질 경로)로 지정 후 html에서도 <script src="dist/app.js">로 Js 참조
+                - src 아래 Ts 경로와 똑같이 dist아래에 Js생긴다.
+                  - ex) src/abc/app.ts -> dist/abc/app.js
+                - 지정 안 하면 자동으로 src 안에 쌓임
+
+              - rootDir: 소스 저장할 경로
+                - 지정한 경로에서만 컴파일 함.
+                - dist에 나타날 파일구조도 달라짐
+                  - ex) ./ 로 지정: dist에도 src폴더 생기고 아래에 js파일 생김.
+                  - ex) src로 지정: disr에 src폴더 없이 js파일 생김
+                - 아래 include, exclude 옵션과도 관련있음
+            */
+            "outDir": "./",
+            "rootDir": "./",
+
+            // 생략....
+
+        }
+      }
+      ```
